@@ -1,0 +1,450 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico de ROI — União Norte Fluminense | dgenny®</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Quicksand',Arial,sans-serif;background:#121325;color:#fff;line-height:1.6}
+h1,h2,h3,h4{font-family:'Montserrat',Arial,sans-serif}
+
+.hero{background:linear-gradient(135deg,#121325 0%,#1a1840 50%,#121325 100%);padding:80px 40px 60px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 50% 50%,rgba(102,96,180,0.18) 0%,transparent 60%);pointer-events:none}
+.logo-svg{margin-bottom:36px;display:inline-block}
+.badge{display:inline-block;background:rgba(102,96,180,0.2);border:1px solid rgba(102,96,180,0.5);color:#FFBEF5;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:8px 20px;border-radius:100px;margin-bottom:24px}
+.hero h1{font-size:clamp(34px,5vw,60px);font-weight:800;line-height:1.1;margin-bottom:16px;color:#fff}
+.hero h1 em{font-style:normal;color:#FFBEF5}
+.hero-sub{font-size:17px;color:rgba(255,255,255,0.65);margin-bottom:48px;font-weight:500}
+.hero-metrics{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-top:48px}
+.hm{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:24px 32px;text-align:center;min-width:150px}
+.hm-val{font-family:'Montserrat',sans-serif;font-size:34px;font-weight:800;color:#FFBEF5;line-height:1;margin-bottom:8px}
+.hm-lbl{font-size:12px;color:rgba(255,255,255,0.55);font-weight:500}
+
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(102,96,180,0.4),transparent)}
+
+.section{padding:72px 40px;max-width:1080px;margin:0 auto}
+.sec-badge{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#6660B4;margin-bottom:14px}
+.sec-title{font-size:clamp(26px,3vw,40px);font-weight:800;margin-bottom:12px;color:#fff}
+.sec-title em{font-style:normal;color:#FFBEF5}
+.sec-desc{font-size:16px;color:rgba(255,255,255,0.6);margin-bottom:44px;max-width:580px}
+
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;margin-bottom:40px}
+.mc{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px 22px;text-align:center;transition:.3s}
+.mc:hover{background:rgba(102,96,180,0.1);border-color:rgba(102,96,180,0.3);transform:translateY(-4px)}
+.mc-val{font-family:'Montserrat',sans-serif;font-size:30px;font-weight:800;color:#FFBEF5;margin-bottom:8px}
+.mc-lbl{font-size:13px;color:rgba(255,255,255,0.55);font-weight:500}
+
+.challenges{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
+.ci{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-left:3px solid #6660B4;border-radius:12px;padding:22px}
+.ci-title{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;color:#fff;margin-bottom:8px}
+.ci-desc{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.55}
+
+.plan-card{background:linear-gradient(135deg,rgba(102,96,180,0.18) 0%,rgba(18,19,37,0.7) 100%);border:1px solid rgba(102,96,180,0.4);border-radius:24px;padding:44px}
+.plan-title{font-family:'Montserrat',sans-serif;font-size:26px;font-weight:800;color:#FFBEF5;margin-bottom:30px}
+.plan-features{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.pf{display:flex;align-items:flex-start;gap:14px}
+.pf-icon{width:40px;height:40px;background:rgba(102,96,180,0.3);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:17px}
+.pf-text strong{display:block;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:#fff;margin-bottom:4px}
+.pf-text span{font-size:12px;color:rgba(255,255,255,0.55)}
+
+.roi-section{background:#0d0e1f;padding:80px 0}
+.roi-inner{max-width:1080px;margin:0 auto;padding:0 40px}
+.roi-table{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-top:44px}
+.rc{border-radius:20px;padding:34px 26px;text-align:center;position:relative;overflow:hidden}
+.rc.cons{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1)}
+.rc.real{background:rgba(102,96,180,0.12);border:1px solid rgba(102,96,180,0.4)}
+.rc.proj{background:linear-gradient(135deg,rgba(255,190,245,0.1) 0%,rgba(102,96,180,0.18) 100%);border:1px solid rgba(255,190,245,0.4)}
+.rc.proj::after{content:'PROJETADO';position:absolute;top:18px;right:-30px;background:#FFBEF5;color:#121325;font-family:'Montserrat',sans-serif;font-size:8px;font-weight:800;letter-spacing:2px;padding:5px 42px;transform:rotate(45deg)}
+.rc-scenario{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:6px}
+.rc-conv{font-size:13px;font-weight:600;color:rgba(255,255,255,0.65);margin-bottom:22px}
+.rc-roi{font-family:'Montserrat',sans-serif;font-size:52px;font-weight:800;line-height:1;margin-bottom:4px}
+.rc.cons .rc-roi{color:rgba(255,255,255,0.8)}
+.rc.real .rc-roi{color:#6660B4}
+.rc.proj .rc-roi{color:#FFBEF5}
+.rc-lbl{font-size:11px;color:rgba(255,255,255,0.45);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:28px}
+.rc-rows{text-align:left;border-top:1px solid rgba(255,255,255,0.08);padding-top:22px}
+.rc-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.05)}
+.rc-row:last-child{border-bottom:none}
+.rc-rl{color:rgba(255,255,255,0.5)}
+.rc-rv{font-family:'Montserrat',sans-serif;font-weight:700;color:#fff}
+.roi-note{text-align:center;margin-top:20px;font-size:12px;color:rgba(255,255,255,0.35)}
+
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.prod-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:30px 22px;text-align:center}
+.prod-num{font-family:'Montserrat',sans-serif;font-size:46px;font-weight:800;color:#FFBEF5;line-height:1;margin-bottom:10px}
+.prod-title{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:#fff;margin-bottom:7px}
+.prod-desc{font-size:12px;color:rgba(255,255,255,0.5)}
+
+.pc-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+.pc{border-radius:20px;padding:38px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1)}
+.pc.anual{background:linear-gradient(135deg,rgba(102,96,180,0.18) 0%,rgba(18,19,37,0.6) 100%);border:2px solid #6660B4}
+.ptag{display:inline-block;background:#6660B4;color:#fff;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:100px;margin-bottom:14px}
+.pname{font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:20px}
+.pprice{font-family:'Montserrat',sans-serif;font-size:40px;font-weight:800;color:#FFBEF5;line-height:1;margin-bottom:4px}
+.pperiod{font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:22px}
+.pitems{list-style:none;margin-bottom:20px}
+.pitems li{padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:10px}
+.pitems li::before{content:'✓';color:#6660B4;font-weight:700;flex-shrink:0}
+.ptotal{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;color:rgba(255,255,255,0.45);margin-top:14px}
+.ptotal strong{color:#FFBEF5}
+
+.timeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0;position:relative}
+.timeline::before{content:'';position:absolute;top:27px;left:0;right:0;height:2px;background:linear-gradient(90deg,#6660B4,#FFBEF5);z-index:0}
+.ts{text-align:center;padding:0 14px;position:relative}
+.ts-dot{width:54px;height:54px;border-radius:50%;background:#6660B4;border:3px solid #121325;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;position:relative;z-index:1;font-family:'Montserrat',sans-serif;font-size:17px;font-weight:800;color:#fff}
+.ts-title{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#fff;margin-bottom:7px}
+.ts-desc{font-size:11px;color:rgba(255,255,255,0.5)}
+
+.contract-box{background:rgba(255,255,255,0.04);border:1px solid rgba(102,96,180,0.35);border-radius:20px;padding:36px 40px}
+.contract-title{font-family:'Montserrat',sans-serif;font-size:18px;font-weight:800;color:#FFBEF5;margin-bottom:16px}
+.contract-intro{font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:26px;max-width:680px}
+.contract-rows{display:flex;flex-direction:column;gap:14px}
+.contract-row{display:flex;gap:14px;align-items:flex-start;font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6}
+.contract-tag{flex-shrink:0;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#6660B4;background:rgba(102,96,180,0.15);border:1px solid rgba(102,96,180,0.4);border-radius:8px;padding:5px 10px;min-width:96px;text-align:center}
+
+.cta-section{background:linear-gradient(135deg,#6660B4 0%,#4f4a9e 100%);padding:80px 40px;text-align:center}
+.cta-section h2{font-size:clamp(26px,3vw,40px);font-weight:800;color:#fff;margin-bottom:14px}
+.cta-section p{font-size:17px;color:rgba(255,255,255,0.8);margin-bottom:38px;max-width:480px;margin-left:auto;margin-right:auto}
+.cta-btn{display:inline-block;background:#FFBEF5;color:#121325;font-family:'Montserrat',sans-serif;font-size:15px;font-weight:800;padding:18px 46px;border-radius:100px;text-decoration:none;letter-spacing:0.5px}
+
+.footer{background:#0a0b18;padding:36px 40px;text-align:center;border-top:1px solid rgba(255,255,255,0.05)}
+.footer-logo{margin-bottom:10px;display:inline-block}
+.footer-text{font-size:12px;color:rgba(255,255,255,0.35)}
+
+@media(max-width:768px){
+  .hero{padding:56px 20px 40px}
+  .section{padding:56px 20px}
+  .roi-table{grid-template-columns:1fr}
+  .pc-grid{grid-template-columns:1fr}
+  .timeline::before{display:none}
+  .plan-card{padding:28px 20px}
+  .cta-section{padding:56px 20px}
+  .roi-inner{padding:0 20px}
+  .contract-box{padding:28px 22px}
+  .contract-row{flex-direction:column;gap:6px}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="logo-svg">
+    <svg width="160" viewBox="0 0 752 196" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M262.485 68.3907C255.412 60.7099 246.08 56.8236 234.697 56.8236C221.49 56.8236 210.989 60.8016 203.503 68.6543C196.029 76.4841 192.246 86.8475 192.246 99.4462C192.246 112.045 196.041 122.454 203.526 129.997C211.012 137.541 221.089 141.37 233.481 141.37H235.786C246.906 141.049 255.985 137.013 262.829 129.367V139.627H277.319V25H262.473V68.3907H262.485ZM235.912 128.782C227.429 128.782 220.527 126.065 215.38 120.7C210.221 115.324 207.608 108.17 207.608 99.4348C207.608 90.1261 210.221 82.709 215.38 77.3898C220.527 72.082 227.429 69.388 235.912 69.388C244.395 69.388 251.021 72.1164 255.698 77.5044C260.433 82.9497 262.829 90.2064 262.829 99.0794C262.829 107.952 260.421 114.796 255.687 120.414C250.941 126.042 244.475 128.771 235.912 128.771V128.782Z" fill="white"/>
+      <path d="M358.437 68.6656C351.341 60.8014 341.895 56.812 330.305 56.812C317.099 56.812 306.598 60.79 299.112 68.6427C291.637 76.4725 287.854 86.8358 287.854 99.4346C287.854 112.033 291.649 122.443 299.135 129.986C306.621 137.529 316.697 141.358 329.09 141.358H331.394C342.227 141.037 351.181 137.082 358.093 129.596V154.541C358.093 156.742 357.612 157.384 357.463 157.533C357.279 157.717 356.626 158.164 354.643 158.164H320.366V171.439H354.643C361.2 171.439 365.763 170.247 368.606 167.793C371.506 165.283 372.927 160.95 372.927 154.553V58.5545H358.437V68.6656ZM331.52 128.782C323.037 128.782 316.136 126.065 310.988 120.7C305.83 115.323 303.216 108.17 303.216 99.4346C303.216 90.1259 305.83 82.7088 310.988 77.3896C316.136 72.0819 323.037 69.3879 331.52 69.3879C340.003 69.3879 346.629 72.1162 351.307 77.5043C356.041 82.9496 358.437 90.2062 358.437 99.0792C358.437 107.952 356.03 114.796 351.295 120.413C346.549 126.042 340.084 128.771 331.52 128.771V128.782Z" fill="white"/>
+      <path d="M457.106 72.506C454.137 67.8517 449.838 64.0228 444.313 61.1453C438.799 58.2679 432.264 56.812 424.882 56.812C412.008 56.812 401.782 60.79 394.457 68.6542C387.166 76.484 383.474 86.7785 383.474 99.2626C383.474 111.747 387.234 122.443 394.663 129.986C402.091 137.54 412.26 141.358 424.882 141.358C431.164 141.358 436.838 140.383 441.745 138.48C446.651 136.566 450.434 134.365 452.991 131.923C455.513 129.516 457.68 126.719 459.422 123.589C461.211 120.391 462.185 118.293 462.517 116.986C462.815 115.793 463.022 114.831 463.148 114.097L463.434 112.435H448.004L447.19 115.152C446.881 116.069 446.216 117.295 445.184 118.797C444.141 120.333 442.822 121.904 441.275 123.463C439.807 124.93 437.641 126.191 434.844 127.223C432.001 128.266 428.722 128.782 425.076 128.782C416.719 128.782 410.277 126.443 405.943 121.835C401.851 117.49 399.443 111.724 398.79 104.674H464.214L464.375 103.435C464.615 101.636 464.73 99.8817 464.73 98.208C464.73 94.6312 464.191 90.573 463.125 86.1365C462.047 81.6656 460.03 77.0686 457.118 72.4946L457.106 72.506ZM449.529 91.9258H398.824C399.627 85.976 402.114 80.7715 406.264 76.4267C410.712 71.7609 417.04 69.3879 425.054 69.3879C433.067 69.3879 438.913 71.715 443.132 76.312C447.293 80.8517 449.449 86.1021 449.54 91.9258H449.529Z" fill="white"/>
+      <path d="M515.446 56.812H514.724C508.338 56.9381 502.595 58.6233 497.631 61.8217C494.353 63.9425 491.659 66.476 489.572 69.3879V58.5545H475.254V139.627H490.099V98.3914C490.099 88.5095 492.358 81.2185 496.817 76.7018C501.265 72.1965 507.364 69.9152 514.93 69.9152C522.496 69.9152 527.701 71.8526 530.876 75.6586C534.121 79.5448 535.76 86.148 535.76 95.2617V139.627H550.778V95.2617C550.778 82.4452 547.912 72.7353 542.248 66.4072C536.54 60.0334 527.529 56.812 515.457 56.812H515.446Z" fill="white"/>
+      <path d="M604.451 56.812H603.729C597.344 56.9381 591.6 58.6233 586.648 61.8217C583.369 63.9425 580.675 66.476 578.589 69.3879V58.5545H564.27V139.627H579.105V98.3914C579.105 88.5095 581.363 81.2185 585.822 76.7018C590.27 72.1965 596.369 69.9152 603.935 69.9152C611.501 69.9152 616.706 71.8526 619.882 75.6586C623.126 79.5448 624.765 86.148 624.765 95.2617V139.783H639.783V95.2617C639.783 82.4452 636.917 72.7353 631.254 66.4072C625.545 60.0334 616.534 56.812 604.463 56.812H604.451Z" fill="white"/>
+      <path d="M707.454 58.5547L682.543 119.428L659.146 59.4603L658.79 58.5547H642.821L675.401 136.99L668.546 153.567C667.606 155.436 667.044 156.525 666.849 156.88C666.849 156.88 666.666 157.167 665.76 157.648C665.302 157.889 664.407 158.175 662.688 158.175H639.772V171.451H662.688C666.047 171.451 668.867 171.141 671.068 170.534C673.441 169.869 675.504 168.447 677.19 166.303C678.76 164.309 679.826 162.761 680.457 161.569C681.053 160.434 682.085 158.221 683.644 154.759L723.572 58.5662H707.454V58.5547Z" fill="white"/>
+      <path d="M721.887 128.392C721.887 126.306 720.603 125.24 718.058 125.24H714.114V135.27H715.479V131.476H719.193C720.087 131.476 720.19 131.946 720.19 132.301V135.27H721.554V132.301C721.554 131.591 721.234 131.098 720.592 130.845C721.463 130.318 721.898 129.493 721.898 128.392H721.887ZM720.523 128.392C720.523 129.665 719.72 130.284 718.058 130.284H715.479V126.432H718.058C719.72 126.432 720.523 127.074 720.523 128.392Z" fill="white"/>
+      <path d="M724.26 123.749C722.449 121.915 720.213 120.987 717.611 120.987C715.009 120.987 712.762 121.915 710.928 123.749C709.093 125.584 708.165 127.819 708.165 130.421C708.165 133.024 709.093 135.213 710.928 137.036C712.762 138.87 715.009 139.799 717.611 139.799C720.213 139.799 722.449 138.87 724.26 137.036C726.071 135.202 727 132.978 727 130.421C727 127.865 726.083 125.584 724.26 123.749ZM725.624 130.433C725.624 132.645 724.833 134.571 723.286 136.142C721.738 137.712 719.823 138.503 717.611 138.503C715.398 138.503 713.473 137.701 711.925 136.107C710.377 134.56 709.586 132.645 709.586 130.433C709.586 128.22 710.377 126.283 711.925 124.69C713.473 123.108 715.387 122.294 717.611 122.294C719.835 122.294 721.738 123.085 723.286 124.655C724.833 126.226 725.624 128.163 725.624 130.421V130.433Z" fill="white"/>
+      <path d="M152.81 80.9664L107.173 93.1984C102.003 94.5855 97.291 97.3024 93.5079 101.085C89.7248 104.869 87.0079 109.58 85.6208 114.75L73.3889 160.388L89.1631 164.618L101.063 120.207L135.729 154.874L147.285 143.318L112.618 108.652L157.029 96.7521L152.799 80.9779L152.81 80.9664Z" fill="#FFBEF5"/>
+      <path d="M108.652 36.051L96.4198 81.6885C95.0326 86.8587 92.3157 91.5704 88.5326 95.3534C84.7496 99.1365 80.0379 101.853 74.8677 103.241L29.2302 115.472L25 99.6982L69.4109 87.7988L34.7557 53.1206L46.3113 41.5651L80.978 76.2317L92.866 31.8208L108.64 36.051H108.652Z" fill="#FFBEF5"/>
+    </svg>
+  </div>
+  <div><div class="badge">Diagnóstico de ROI</div></div>
+  <h1>Regularizações e retrabalho<br><em>viram governança de compras</em></h1>
+  <p class="hero-sub">Projeção de retorno para <strong>União Norte Fluminense</strong> · 7 Assistentes de IA</p>
+  <div class="hero-metrics">
+    <div class="hm"><div class="hm-val">R$ 7M</div><div class="hm-lbl">Volume de compras/mês</div></div>
+    <div class="hm"><div class="hm-val">25×</div><div class="hm-lbl">ROI Ano 1 realista</div></div>
+    <div class="hm"><div class="hm-val">14 dias</div><div class="hm-lbl">Payback realista</div></div>
+    <div class="hm"><div class="hm-val">42.000</div><div class="hm-lbl">Conversas/ano</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SITUAÇÃO ATUAL -->
+<section class="section">
+  <div class="sec-badge">Situação Atual</div>
+  <h2 class="sec-title">O cenário de compras da<br><em>União Norte Fluminense</em> hoje</h2>
+  <p class="sec-desc">Dados base do diagnóstico — levantados na reunião de agosto de 2026 com Maurício Andrade, coordenador de Compras.</p>
+  <div class="metrics-grid">
+    <div class="mc"><div class="mc-val">R$ 7M</div><div class="mc-lbl">em compras por mês (excl. diesel)</div></div>
+    <div class="mc"><div class="mc-val">~1.500</div><div class="mc-lbl">pedidos de compra/mês</div></div>
+    <div class="mc"><div class="mc-val">7</div><div class="mc-lbl">compradores na equipe (+1 em contratação)</div></div>
+    <div class="mc"><div class="mc-val">Mega</div><div class="mc-lbl">plataforma de gestão (ERP)</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DESAFIOS -->
+<section class="section">
+  <div class="sec-badge">Diagnóstico</div>
+  <h2 class="sec-title">Desafios <em>identificados</em></h2>
+  <p class="sec-desc">O que está travando a eficiência de compras da União Norte Fluminense hoje.</p>
+  <div class="challenges">
+    <div class="ci">
+      <div class="ci-title">"Regularizações" fora do setor de compras</div>
+      <div class="ci-desc">Compras feitas direto por projetos e obras, formalizadas só depois junto ao setor de compras — apontado pelo próprio Maurício como "meu calcanhar de Aquiles", sem negociação nem rastreabilidade.</div>
+    </div>
+    <div class="ci">
+      <div class="ci-title">Cotações recorrentes travadas em até 10 dias</div>
+      <div class="ci-desc">Itens de reposição mensal (material de limpeza, escritório) consomem prazos longos e desproporcionais ao seu impacto financeiro — muitas vezes nem fecham dentro do prazo.</div>
+    </div>
+    <div class="ci">
+      <div class="ci-title">Fluxo disperso entre WhatsApp, e-mail e PDF</div>
+      <div class="ci-desc">Orçamentos recebidos por WhatsApp ficam inacessíveis após 30 a 60 dias — sem histórico centralizado para consulta, comparação ou auditoria.</div>
+    </div>
+    <div class="ci">
+      <div class="ci-title">Sem tempo para negociar ou prospectar fornecedores</div>
+      <div class="ci-desc">A meta de prospecção mensal de novos fornecedores foi abandonada por falta de tempo — o time compra com assertividade, mas não negocia preço nem amplia a base de concorrência.</div>
+    </div>
+    <div class="ci">
+      <div class="ci-title">Risco de item substituto não homologado</div>
+      <div class="ci-desc">Fornecedores oferecem alternativas (ex.: EPI com CA não homologado) que podem passar despercebidas sem atenção redobrada do comprador — gerando rejeição do SESMT.</div>
+    </div>
+    <div class="ci">
+      <div class="ci-title">Solicitações incompletas ou com uso incorreto de campos</div>
+      <div class="ci-desc">Pedidos chegam com duplicidade ou usam o campo "especificação" para trocar a característica do item, gerando retrabalho e risco de compra errada.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PLANO -->
+<section class="section">
+  <div class="sec-badge">Solução Proposta</div>
+  <h2 class="sec-title">7 Assistentes de IA <em>dgenny®</em></h2>
+  <p class="sec-desc">Um assistente por comprador, configurados especificamente para a operação de compras da União Norte Fluminense.</p>
+  <div class="plan-card">
+    <div class="plan-title">7 Assistentes de IA · 42.000 Conversas/ano</div>
+    <div class="plan-features">
+      <div class="pf">
+        <div class="pf-icon">🤖</div>
+        <div class="pf-text">
+          <strong>Negociação automatizada via WhatsApp</strong>
+          <span>Um assistente dedicado por comprador conduz cotações com fornecedores de ponta a ponta, sem depender de disponibilidade manual</span>
+        </div>
+      </div>
+      <div class="pf">
+        <div class="pf-icon">🔍</div>
+        <div class="pf-text">
+          <strong>Prospecção contínua de fornecedores</strong>
+          <span>Amplia ativamente a base por categoria (EPI, material de expediente, insumos de manutenção) — retoma a meta de prospecção que hoje não há tempo para executar</span>
+        </div>
+      </div>
+      <div class="pf">
+        <div class="pf-icon">⚖️</div>
+        <div class="pf-text">
+          <strong>Equalização automática de propostas</strong>
+          <span>Compara cotações recebidas em critérios padronizados — preço, prazo, especificação — e sinaliza itens substitutos antes da decisão</span>
+        </div>
+      </div>
+      <div class="pf">
+        <div class="pf-icon">🔄</div>
+        <div class="pf-text">
+          <strong>Follow-up automático com fornecedores</strong>
+          <span>Cobra retorno de propostas pendentes sem depender do time — reduz o ciclo de até 10 dias para fechamento de itens recorrentes</span>
+        </div>
+      </div>
+      <div class="pf">
+        <div class="pf-icon">📋</div>
+        <div class="pf-text">
+          <strong>Histórico centralizado de negociações</strong>
+          <span>Elimina a dependência de PDFs perdidos no WhatsApp após 30-60 dias — toda cotação fica registrada e consultável</span>
+        </div>
+      </div>
+      <div class="pf">
+        <div class="pf-icon">🔗</div>
+        <div class="pf-text">
+          <strong>Integração Mega (em alinhamento)</strong>
+          <span>Prevista no plano — pedidos de compra confirmados entram automaticamente no Mega, reduzindo o gargalo das "regularizações"</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROI -->
+<section class="roi-section">
+  <div class="roi-inner">
+    <div class="sec-badge">Retorno sobre Investimento</div>
+    <h2 class="sec-title">Quanto a dgenny® <em>gera de saving</em></h2>
+    <p class="sec-desc" style="margin-bottom:0">Base de cálculo: R$ 7.000.000/mês em compras (excluindo diesel, tratado à parte). Saving sobre nova base de fornecedores prospectados pela IA e maior competição nas cotações.</p>
+    <div class="roi-table">
+      <div class="rc cons">
+        <div class="rc-scenario">Conservador</div>
+        <div class="rc-conv">2% de saving</div>
+        <div class="rc-roi">12×</div>
+        <div class="rc-lbl">ROI Ano 1</div>
+        <div class="rc-rows">
+          <div class="rc-row"><span class="rc-rl">Economia/mês</span><span class="rc-rv">R$ 140.000</span></div>
+          <div class="rc-row"><span class="rc-rl">Economia/ano</span><span class="rc-rv">R$ 1.680.000</span></div>
+          <div class="rc-row"><span class="rc-rl">Ganho líquido Ano 1</span><span class="rc-rv">R$ 1.549.400</span></div>
+          <div class="rc-row"><span class="rc-rl">Payback</span><span class="rc-rv">~28 dias</span></div>
+        </div>
+      </div>
+      <div class="rc real">
+        <div class="rc-scenario">Realista</div>
+        <div class="rc-conv">4% de saving</div>
+        <div class="rc-roi" style="color:#6660B4">25×</div>
+        <div class="rc-lbl">ROI Ano 1</div>
+        <div class="rc-rows">
+          <div class="rc-row"><span class="rc-rl">Economia/mês</span><span class="rc-rv">R$ 280.000</span></div>
+          <div class="rc-row"><span class="rc-rl">Economia/ano</span><span class="rc-rv">R$ 3.360.000</span></div>
+          <div class="rc-row"><span class="rc-rl">Ganho líquido Ano 1</span><span class="rc-rv">R$ 3.229.400</span></div>
+          <div class="rc-row"><span class="rc-rl">Payback</span><span class="rc-rv">~14 dias</span></div>
+        </div>
+      </div>
+      <div class="rc proj">
+        <div class="rc-scenario">Projetado</div>
+        <div class="rc-conv">6% de saving</div>
+        <div class="rc-roi">38×</div>
+        <div class="rc-lbl">ROI Ano 1</div>
+        <div class="rc-rows">
+          <div class="rc-row"><span class="rc-rl">Economia/mês</span><span class="rc-rv">R$ 420.000</span></div>
+          <div class="rc-row"><span class="rc-rl">Economia/ano</span><span class="rc-rv">R$ 5.040.000</span></div>
+          <div class="rc-row"><span class="rc-rl">Ganho líquido Ano 1</span><span class="rc-rv">R$ 4.909.400</span></div>
+          <div class="rc-row"><span class="rc-rl">Payback</span><span class="rc-rv">~9 dias</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="roi-note">* Retorno previsível, não garantido. Saving aplicado sobre o volume de compras de R$ 7.000.000/mês (excluindo diesel) — gerado por maior competição entre fornecedores e negociação estruturada pela IA. Investimento Ano 1 (Plano Completo) = R$ 9.800 × 12 meses + R$ 13.000 implantação = R$ 130.600. Horas economizadas por comprador (30-40h/mês) não contabilizadas no cálculo.</p>
+  </div>
+</section>
+
+<!-- IMPACTO OPERACIONAL -->
+<section class="section">
+  <div class="sec-badge">Impacto Operacional</div>
+  <h2 class="sec-title">O que muda na<br><em>operação do time</em></h2>
+  <p class="sec-desc">Além do saving financeiro, a dgenny® multiplica a capacidade de compras sem aumentar a equipe.</p>
+  <div class="prod-grid">
+    <div class="prod-card">
+      <div class="prod-num">42.000</div>
+      <div class="prod-title">Conversas/ano gerenciadas</div>
+      <div class="prod-desc">Volume conduzido pela IA com velocidade e consistência que o processo manual via WhatsApp/e-mail não alcança</div>
+    </div>
+    <div class="prod-card">
+      <div class="prod-num">5×</div>
+      <div class="prod-title">Produtividade do time</div>
+      <div class="prod-desc">O time de compras opera múltiplas negociações em paralelo, sem aumentar headcount ou carga operacional</div>
+    </div>
+    <div class="prod-card">
+      <div class="prod-num">35h</div>
+      <div class="prod-title">Economizadas/mês por comprador</div>
+      <div class="prod-desc">Faixa de 30 a 40h/mês observada na base ativa de clientes dgenny — tempo hoje consumido em cotações de curva C/D</div>
+    </div>
+    <div class="prod-card">
+      <div class="prod-num">→</div>
+      <div class="prod-title">Integração Mega</div>
+      <div class="prod-desc">Prevista no plano — pedidos de compra confirmados vão direto para o Mega, reduzindo o gargalo das regularizações</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- INVESTIMENTO -->
+<section class="section">
+  <div class="sec-badge">Investimento</div>
+  <h2 class="sec-title"><em>Planos</em> disponíveis</h2>
+  <p class="sec-desc">Modelo de créditos de conversas, contrato anual. Implantação cobrada uma única vez — configuração dos assistentes, integração Mega, treinamento e acompanhamento inicial.</p>
+  <div class="pc-grid">
+    <div class="pc">
+      <div class="pname">Plano Inicial</div>
+      <div class="pprice">R$ 5.000<span style="font-size:15px;color:#FFBEF5;font-weight:700"> /mês</span></div>
+      <div class="pperiod">+ <strong style="color:#FFBEF5">R$ 8.000</strong> de implantação (única vez)</div>
+      <ul class="pitems">
+        <li>3 Assistentes de IA dgenny®</li>
+        <li>18.000 conversas/ano</li>
+        <li>WhatsApp Business oficial (Meta)</li>
+        <li>Prospecção e equalização automática</li>
+        <li>Governança e rastreabilidade total</li>
+        <li>Suporte dedicado contínuo</li>
+      </ul>
+    </div>
+    <div class="pc">
+      <div class="pname">Plano Essencial</div>
+      <div class="pprice">R$ 7.000<span style="font-size:15px;color:#FFBEF5;font-weight:700"> /mês</span></div>
+      <div class="pperiod">+ <strong style="color:#FFBEF5">R$ 9.000</strong> de implantação (única vez)</div>
+      <ul class="pitems">
+        <li>5 Assistentes de IA dgenny®</li>
+        <li>30.000 conversas/ano</li>
+        <li>WhatsApp Business oficial (Meta)</li>
+        <li>Prospecção e equalização automática</li>
+        <li>Governança e rastreabilidade total</li>
+        <li>Suporte dedicado contínuo</li>
+      </ul>
+    </div>
+    <div class="pc anual">
+      <div class="ptag">Recomendado</div>
+      <div class="pname">Plano Completo</div>
+      <div class="pprice">R$ 9.800<span style="font-size:15px;color:#FFBEF5;font-weight:700"> /mês</span></div>
+      <div class="pperiod">+ <strong style="color:#FFBEF5">R$ 13.000</strong> de implantação (única vez)</div>
+      <ul class="pitems">
+        <li>7 Assistentes de IA dgenny®</li>
+        <li>42.000 conversas/ano</li>
+        <li>WhatsApp Business oficial (Meta)</li>
+        <li>Prospecção e equalização automática</li>
+        <li>Governança e rastreabilidade total</li>
+        <li>Integração Mega (em alinhamento)</li>
+        <li>Suporte dedicado contínuo</li>
+      </ul>
+    </div>
+  </div>
+  <div style="max-width:680px;margin:32px auto 0;text-align:center;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px 24px">
+    <p style="font-size:13px;color:rgba(255,255,255,0.55)">Validade da proposta: <strong style="color:#FFBEF5">01/10/2026</strong></p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRÓXIMOS PASSOS -->
+<section class="section">
+  <div class="sec-badge">Próximos Passos</div>
+  <h2 class="sec-title">Da aprovação ao<br><em>primeiro resultado</em></h2>
+  <p class="sec-desc" style="margin-bottom:60px">Implantação estruturada para zero impacto na operação atual durante a transição.</p>
+  <div class="timeline">
+    <div class="ts"><div class="ts-dot">1</div><div class="ts-title">Aprovação</div><div class="ts-desc">Alinhamento final com Maurício e Vinícius (superintendência)</div></div>
+    <div class="ts"><div class="ts-dot">2</div><div class="ts-title">Contrato &#038; Kick-off</div><div class="ts-desc">Assinatura e início do setup técnico</div></div>
+    <div class="ts"><div class="ts-dot">3</div><div class="ts-title">Implantação</div><div class="ts-desc">Configuração dos 7 assistentes e integração Mega</div></div>
+    <div class="ts"><div class="ts-dot">4</div><div class="ts-title">Go-live</div><div class="ts-desc">Primeiras negociações de compra com a dgenny® em produção</div></div>
+    <div class="ts"><div class="ts-dot">5</div><div class="ts-title">Acompanhamento</div><div class="ts-desc">Otimização contínua para maximizar saving e horas economizadas por comprador</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTRATO DE PRODUTIVIDADE -->
+<section class="section">
+  <div class="sec-badge">Compromisso</div>
+  <h2 class="sec-title">🤝 Contrato de <em>Produtividade</em></h2>
+  <div class="contract-box">
+    <p class="contract-intro">Incluímos essa cláusula porque acreditamos — de verdade — nos resultados que a dgenny® entrega. Se a ferramenta está sendo usada, ela está gerando retorno. E um cliente que cresce com a plataforma não precisa de barreiras para ficar — precisa de resultado para querer continuar. Por isso, quanto mais a União Norte Fluminense usar a dgenny®, mais flexível é o compromisso contratual.</p>
+    <div class="contract-rows">
+      <div class="contract-row"><span class="contract-tag">Compromisso</span><span>A União Norte Fluminense se compromete a usar no mínimo 70% das conversas iniciadas do pacote contratado (42.000/ano no Plano Completo, 30.000/ano no Essencial ou 18.000/ano no Inicial) durante os 2 primeiros meses de contrato.</span></div>
+      <div class="contract-row"><span class="contract-tag">Benefício</span><span>Cumprido esse mínimo, o cliente pode cancelar o contrato a partir do 3º mês sem multa nenhuma.</span></div>
+      <div class="contract-row"><span class="contract-tag">Condição</span><span>Se não atingir 70% em qualquer um dos 2 primeiros meses, a multa rescisória permanece válida até o 12º mês do contrato.</span></div>
+      <div class="contract-row"><span class="contract-tag">Multa</span><span>35% sobre o valor do contrato restante (meses que faltam para completar os 12 meses), aplicável apenas se o compromisso de uso não for cumprido nos 2 primeiros meses.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Pronto para transformar<br>compras em margem?</h2>
+  <p>O próximo passo é alinhar os detalhes da implantação.<br>O Sávio está disponível para avançar com o Maurício e o Vinícius.</p>
+  <a href="https://www.dgenny.com.br/registro-cliente" target="_blank" class="cta-btn">Avançar com a dgenny®</a>
+</section>
+
+<div class="footer">
+  <div class="footer-logo">
+    <svg width="100" viewBox="0 0 752 196" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:.5">
+      <path d="M262.485 68.3907C255.412 60.7099 246.08 56.8236 234.697 56.8236C221.49 56.8236 210.989 60.8016 203.503 68.6543C196.029 76.4841 192.246 86.8475 192.246 99.4462C192.246 112.045 196.041 122.454 203.526 129.997C211.012 137.541 221.089 141.37 233.481 141.37H235.786C246.906 141.049 255.985 137.013 262.829 129.367V139.627H277.319V25H262.473V68.3907H262.485ZM235.912 128.782C227.429 128.782 220.527 126.065 215.38 120.7C210.221 115.324 207.608 108.17 207.608 99.4348C207.608 90.1261 210.221 82.709 215.38 77.3898C220.527 72.082 227.429 69.388 235.912 69.388C244.395 69.388 251.021 72.1164 255.698 77.5044C260.433 82.9497 262.829 90.2064 262.829 99.0794C262.829 107.952 260.421 114.796 255.687 120.414C250.941 126.042 244.475 128.771 235.912 128.771V128.782Z" fill="white"/>
+      <path d="M152.81 80.9664L107.173 93.1984C102.003 94.5855 97.291 97.3024 93.5079 101.085C89.7248 104.869 87.0079 109.58 85.6208 114.75L73.3889 160.388L89.1631 164.618L101.063 120.207L135.729 154.874L147.285 143.318L112.618 108.652L157.029 96.7521L152.799 80.9779L152.81 80.9664Z" fill="#FFBEF5"/>
+      <path d="M108.652 36.051L96.4198 81.6885C95.0326 86.8587 92.3157 91.5704 88.5326 95.3534C84.7496 99.1365 80.0379 101.853 74.8677 103.241L29.2302 115.472L25 99.6982L69.4109 87.7988L34.7557 53.1206L46.3113 41.5651L80.978 76.2317L92.866 31.8208L108.64 36.051H108.652Z" fill="#FFBEF5"/>
+    </svg>
+  </div>
+  <div class="footer-text">Negocie. Compre. Escale. · dgenny.com.br · Diagnóstico confidencial elaborado em setembro de 2026</div>
+</div>
+
+</body>
+</html>
